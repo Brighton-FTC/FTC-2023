@@ -142,11 +142,20 @@ public class TensorFlowDefault extends LinearOpMode {  //TODO: Test
                             double width  = Math.abs(recognition.getRight() - recognition.getLeft()) ;
                             double height = Math.abs(recognition.getTop()  - recognition.getBottom()) ;
 
-                            if (recognition.getLabel().equals("1 Bolt" ) | recognition.getLabel().equals("2 Bulb" ) | recognition.getLabel().equals("3 Panel" )) {
+                            if (recognition.getLabel().equals("2 Bulb" )){
                                 isConeDetected = true;
-                                telemetry.addData("Object Detected", "CONE");
-                            } else {
-                                isConeDetected = false;
+                                String label = "pos1";
+                                telemetry.addData("Object Detected", "BOLT, POS1");
+                            }
+                            else if (recognition.getLabel().equals("2 Bulb" )){
+                                isConeDetected = true;
+                                String label = "pos2";
+                                telemetry.addData("Object Detected", "BULB, POS2");
+                            }
+                            else if (recognition.getLabel().equals("3 Panel" )){
+                                isConeDetected = true;
+                                String label = "pos3";
+                                telemetry.addData("Object Detected", "PANEL, POS3");
                             }
 
                             telemetry.addData(""," ");
