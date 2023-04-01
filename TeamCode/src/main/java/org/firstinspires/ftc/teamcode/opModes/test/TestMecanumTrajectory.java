@@ -41,6 +41,7 @@ public class TestMecanumTrajectory extends AutonomousModeBase { //TODO: Test
     private double timeBeforeLastTick;
 
     public void setup(){
+        timer = new Timing.Timer(30);
 
         timer.start();
 
@@ -82,6 +83,7 @@ public class TestMecanumTrajectory extends AutonomousModeBase { //TODO: Test
         Rotation2d.fromDegrees(-180));
         Pose2d end = new Pose2d(23.7, 6.8,
         Rotation2d.fromDegrees(-160));
+
         ArrayList interiorWaypoints = new ArrayList<Translation2d>();
         interiorWaypoints.add(new Translation2d(14.54, 23.23));
         interiorWaypoints.add(new Translation2d(21.04, 18.23));
@@ -123,11 +125,10 @@ public class TestMecanumTrajectory extends AutonomousModeBase { //TODO: Test
         TrajectoryConfig config = new TrajectoryConfig(12, 12);
         config.setReversed(true);
 
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        return TrajectoryGenerator.generateTrajectory(
                 sideStart,
                 interiorWaypoints,
                 crossScale,
                 config);
-        return trajectory;
     }
 }
