@@ -25,9 +25,9 @@ import java.util.ArrayList;
 // Note this is for Mecanum, will change later
 // Could figure out some stuff with looking at docs and entering in measurements, but I don't feel like it.
 
-@Autonomous(name="<OpMode name>", group="<OpMode group name>")
+@Autonomous(name="Mecanum Testing Trajectory", group="test")
 @Disabled
-public class TestMecanumAutonomous extends AutonomousModeBase { //TODO: Test
+public class TestMecanumTrajectory extends AutonomousModeBase { //TODO: Test
 
     private RevIMU imu;
     private Pose2d m_pose;
