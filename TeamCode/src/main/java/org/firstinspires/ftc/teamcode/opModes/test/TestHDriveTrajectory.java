@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 @Autonomous(name="Mecanum Testing Trajectory", group="test")
 @Disabled
-public class TestHDriveTrajectory extends AutonomousModeBase { //TODO: Test
+public class TestHDriveTrajectory extends AutonomousModeBase { //TODO: review
 
     private RevIMU imu;
     private Pose2d m_pose;
@@ -49,17 +49,21 @@ public class TestHDriveTrajectory extends AutonomousModeBase { //TODO: Test
     private MotorGroup myMotors1;
     private MotorGroup myMotors2;
 
+    // DETERMINE THESE WITH TESTING WITH ACTUAL DRIVETRAIN
+    // TODO: Insert PID proportional
+    private final PIDController m_leftPIDController = new PIDController(1, 0, 0);
+    private final PIDController m_rightPIDController = new PIDController(1, 0, 0);
+    private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 3);
+
     private double timeBeforeLastTick;
 
     public void setup(){
         timer = new Timing.Timer(30);
-
         timer.start();
 
         // gyro
         imu = new RevIMU(hardwareMap);
         imu.init();
-
 
         myMotors1 = new MotorGroup(HardwareMapContainer.motor0);
         myMotors2 = new MotorGroup(HardwareMapContainer.motor1);
@@ -85,6 +89,7 @@ public class TestHDriveTrajectory extends AutonomousModeBase { //TODO: Test
         // our starting pose is 5 meters along the long end of the field and in the
         // center of the field along the short end, facing forward.
         // TODO: Look at game documentation to figure out what to write for this
+        // The position on the field will change because we will end up on both sides, so we need two?
         m_odometry = new DifferentialDriveOdometry(
             this.imu.getRotation2d(),
             new Pose2d(5.0, 13.5, new Rotation2d())
@@ -116,6 +121,15 @@ public class TestHDriveTrajectory extends AutonomousModeBase { //TODO: Test
         ChassisSpeeds adjustedSpeeds = controller.calculate(m_pose, goal);
         DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(adjustedSpeeds);
 
+        final double leftFeedforward = m_feedforward.calculate(wheelSpeeds.leftMetersPerSecond);
+        final double rightFeedforward = m_feedforward.calculate(wheelSpeeds.rightMetersPerSecond);
+
+        final double leftOutput =
+                m_leftPIDController.calculate(myMotors1.getCurrentPosition(), wheelSpeeds.leftMetersPerSecond);
+        final double rightOutput =
+                m_rightPIDController.calculate(myMotors2.getCurrentPosition(), wheelSpeeds.rightMetersPerSecond);
+        myMotors1.set(leftOutput + leftFeedforward);
+        myMotors2.set(rightOutput + rightFeedforward);
 
 //        m_drive.arcadeDrive(adjustedSpeeds.vxMetersPerSecond, adjustedSpeeds.vyMetersPerSecond, adjustedSpeeds.omegaRadiansPerSecond,false);
 
