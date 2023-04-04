@@ -31,7 +31,6 @@ import org.firstinspires.ftc.teamcode.libs.brightonCollege.util.HardwareMapConta
 import java.util.ArrayList;
 
 // This should serve as a basis for moving the robot around in Autonomous with fancy trajectories.
-// Note this is for Mecanum, will change later
 // Could figure out some stuff with looking at docs and entering in measurements, but I don't feel like it.
 
 @Autonomous(name="Mecanum Testing Trajectory", group="test")
