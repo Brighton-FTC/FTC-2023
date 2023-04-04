@@ -87,11 +87,14 @@ public class TestHDriveTrajectory extends AutonomousModeBase { //TODO: review
         // Creating my odometry object from the kinematics object. Here,
         // our starting pose is 5 meters along the long end of the field and in the
         // center of the field along the short end, facing forward.
-        // TODO: Look at game documentation to figure out what to write for this
-        // The position on the field will change because we will end up on both sides, so we need two?
+        //        new Pose2d(5.0, 13.5, new Rotation2d())
+        
+        // TODO: Check if this is correct
+        // The position on the field will change because we will end up on both sides, so just in case
+        // This is the other starting position: x = 31.4706, y = 31.1658
         m_odometry = new DifferentialDriveOdometry(
             this.imu.getRotation2d(),
-            new Pose2d(5.0, 13.5, new Rotation2d())
+            new Pose2d(10.1346, 10.4394, new Rotation2d())
         );
 
         // This is left here as a example for what to do.
@@ -150,7 +153,7 @@ public class TestHDriveTrajectory extends AutonomousModeBase { //TODO: review
     }
 
     public Trajectory generateTrajectory(Pose2d sideStart, Pose2d crossScale,ArrayList interiorWaypoints) {
-        // pretty sure we have to figure this out
+        // pretty sure we have to figure this out with testing
         // TODO: insert maxVelocityMetersPerSecond and maxAcclerationMetersPerSecondSq
         TrajectoryConfig config = new TrajectoryConfig(12, 12);
         config.setReversed(true);
