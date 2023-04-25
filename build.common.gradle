@@ -127,5 +127,6 @@ repositories {
         dirs rootProject.file('libs')
     }
     mavenCentral() // For FTCLib
+    jcenter()
 }
 
