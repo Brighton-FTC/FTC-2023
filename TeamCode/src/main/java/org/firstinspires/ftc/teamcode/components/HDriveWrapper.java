@@ -98,14 +98,18 @@ public class HDriveWrapper {
         // The vector angle is considered starting with +ve x axis, but robot's angle starts with +ve y axis
         // (x, y) -> (y, -x) turns it 90 degrees clockwise
         Vector2d joystickVector = new Vector2d(y, -x);
-        double direction = Math.toDegrees(joystickVector.angle());
+//        double direction = Math.toDegrees(joystickVector.angle());
         double magnitude = joystickVector.magnitude();
 
 //        direction = snapAngle(direction);
-        direction /= 10;
+//        direction /= 2;
 
         // only change the turn direction if not in the middle position
-        if (magnitude > 0.1) desiredDirection = direction;
+        if(x > 0) {
+            if (magnitude > 0.1) desiredDirection -= 8 * magnitude;
+        } else {
+            if (magnitude > 0.1) desiredDirection += 8 * magnitude;
+        }
     }
 
     public void fieldOrientedDriveAbsoluteRotation(double strafe, double forward){
