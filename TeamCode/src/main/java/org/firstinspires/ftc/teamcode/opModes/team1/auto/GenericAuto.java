@@ -183,8 +183,8 @@ public class GenericAuto
         }
 
         final double AWAYFROMWALL_TIME = 1.0; // To travel away from the wall at the start so don't scrape on it
-        final double ONETILE_TIME = 2.0; // To travel 2'
-        final double INTOZONE_TIME = 3.2; // To travel ~3'
+        final double ONETILE_TIME = 1.8;
+        final double INTOZONE_TIME = 2.5; // To travel ~3'
 
         /* Drive to zone based on tag seen */
         // Start facing right when looking at wall from pitch, with left side touching wall - allowed in Traditional Game Manual 2, Top of Page 15

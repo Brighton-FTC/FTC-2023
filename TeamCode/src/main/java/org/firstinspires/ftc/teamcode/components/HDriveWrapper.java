@@ -101,10 +101,11 @@ public class HDriveWrapper {
         double direction = Math.toDegrees(joystickVector.angle());
         double magnitude = joystickVector.magnitude();
 
-        direction = snapAngle(direction);
+//        direction = snapAngle(direction);
+        direction /= 10;
 
         // only change the turn direction if not in the middle position
-        if (magnitude > 0.2) desiredDirection = direction;
+        if (magnitude > 0.1) desiredDirection = direction;
     }
 
     public void fieldOrientedDriveAbsoluteRotation(double strafe, double forward){
