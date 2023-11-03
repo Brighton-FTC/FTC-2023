@@ -2,18 +2,20 @@ package org.firstinspires.ftc.teamcode.opModes.test;
 
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.RevIMU;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.libs.brightonCollege.inputs.Inputs;
-import org.firstinspires.ftc.teamcode.libs.brightonCollege.inputs.PSButtons;
-import org.firstinspires.ftc.teamcode.libs.brightonCollege.modeBases.TeleOpModeBase;
-import org.firstinspires.ftc.teamcode.libs.brightonCollege.util.HardwareMapContainer;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 
 
 @TeleOp(name="Test Mecanum Drive [12sliu]", group="Drivetrain")
 @Disabled
-public class TestMecanumDrive extends TeleOpModeBase { //TODO: Test
+public class TestMecanumDrive extends OpMode { //TODO: Test
 
     // DRIVE TRAIN
     private MecanumDrive meca_drive;
@@ -23,16 +25,36 @@ public class TestMecanumDrive extends TeleOpModeBase { //TODO: Test
     private boolean fieldCentric = false;
     private RevIMU imu;
 
+    private GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
+
     @Override
     public void setup() {
+        // TODO: Define PSButtons enum in a different file
+//        package org.firstinspires.ftc.teamcode.inputs;
+//
+//        import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+//
+//        /**
+//         * Gamepad buttons referred to by their PlayStation names. For other buttons, please see {@link GamepadKeys.Button}
+//         */
+//        public class PSButtons {
+//            public static final GamepadKeys.Button SQUARE = GamepadKeys.Button.X;
+//            public static final GamepadKeys.Button TRIANGLE = GamepadKeys.Button.Y;
+//            public static final GamepadKeys.Button CIRCLE = GamepadKeys.Button.B;
+//            public static final GamepadKeys.Button CROSS = GamepadKeys.Button.A;
+//
+//            public static final GamepadKeys.Button SHARE = GamepadKeys.Button.BACK;
+//            public static final GamepadKeys.Button OPTIONS = GamepadKeys.Button.START;
+//        }
+
 
         //groups motors together for drive
-        this.meca_drive = new MecanumDrive(HardwareMapContainer.motor0, HardwareMapContainer.motor1, HardwareMapContainer.motor2, HardwareMapContainer.motor3);
+        this.meca_drive = new MecanumDrive(new Motor(hardwareMap, "frontLeftDrive"), new Motor(hardwareMap, "frontRightDrive"), new Motor(hardwareMap, "backLeftDrive"), new Motor(hardwareMap, "backRightDrive"));
         this.imu = new RevIMU(hardwareMap);
         this.imu.init();
-        new GamepadButton(Inputs.gamepad1, PSButtons.TRIANGLE).whenPressed(() -> fieldCentric = !fieldCentric);
-        new GamepadButton(Inputs.gamepad1, PSButtons.CIRCLE).whenPressed(() -> isForwardOnlyMode = !isForwardOnlyMode);
-        new GamepadButton(Inputs.gamepad1, PSButtons.SQUARE).whenPressed(() -> isSlowMode = !isSlowMode);
+        new GamepadButton(gamepadEx1, PSButtons.TRIANGLE).whenPressed(() -> fieldCentric = !fieldCentric);
+        new GamepadButton(gamepadEx1, PSButtons.CIRCLE).whenPressed(() -> isForwardOnlyMode = !isForwardOnlyMode);
+        new GamepadButton(gamepadEx1, PSButtons.SQUARE).whenPressed(() -> isSlowMode = !isSlowMode);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
@@ -41,12 +63,12 @@ public class TestMecanumDrive extends TeleOpModeBase { //TODO: Test
     public void every_tick() {
         // Code to run in a loop after `PLAY` is pressed
         telemetry.addData("Status", "Running");
-        telemetry.addData("leftX", Inputs.gamepad1.getLeftX());
-        telemetry.addData("leftY", Inputs.gamepad1.getLeftY());
-        telemetry.addData("rightX", Inputs.gamepad1.getRightX());
-        double leftY = Inputs.gamepad1.getLeftY();
-        double leftX = Inputs.gamepad1.getLeftX();
-        double rightX = Inputs.gamepad1.getRightX();
+        telemetry.addData("leftX", gamepadEx1.getLeftX());
+        telemetry.addData("leftY", gamepadEx1.getLeftY());
+        telemetry.addData("rightX", gamepadEx1.getRightX());
+        double leftY = gamepadEx1.getLeftY();
+        double leftX = gamepadEx1.getLeftX();
+        double rightX = gamepadEx1.getRightX();
         if (isSlowMode){
             leftX *= 0.5;
             leftY *= 0.5;
