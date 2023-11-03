@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.libs.brightonCollege.inputs.PSButtons;
 
 
 @TeleOp(name="Test Mecanum Drive [12sliu]", group="Drivetrain")
@@ -28,25 +29,7 @@ public class TestMecanumDrive extends OpMode { //TODO: Test
     private GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
 
     @Override
-    public void setup() {
-        // TODO: Define PSButtons enum in a different file
-//        package org.firstinspires.ftc.teamcode.inputs;
-//
-//        import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-//
-//        /**
-//         * Gamepad buttons referred to by their PlayStation names. For other buttons, please see {@link GamepadKeys.Button}
-//         */
-//        public class PSButtons {
-//            public static final GamepadKeys.Button SQUARE = GamepadKeys.Button.X;
-//            public static final GamepadKeys.Button TRIANGLE = GamepadKeys.Button.Y;
-//            public static final GamepadKeys.Button CIRCLE = GamepadKeys.Button.B;
-//            public static final GamepadKeys.Button CROSS = GamepadKeys.Button.A;
-//
-//            public static final GamepadKeys.Button SHARE = GamepadKeys.Button.BACK;
-//            public static final GamepadKeys.Button OPTIONS = GamepadKeys.Button.START;
-//        }
-
+    public void init() {
 
         //groups motors together for drive
         this.meca_drive = new MecanumDrive(new Motor(hardwareMap, "frontLeftDrive"), new Motor(hardwareMap, "frontRightDrive"), new Motor(hardwareMap, "backLeftDrive"), new Motor(hardwareMap, "backRightDrive"));
@@ -60,7 +43,7 @@ public class TestMecanumDrive extends OpMode { //TODO: Test
     }
 
     @Override
-    public void every_tick() {
+    public void loop() {
         // Code to run in a loop after `PLAY` is pressed
         telemetry.addData("Status", "Running");
         telemetry.addData("leftX", gamepadEx1.getLeftX());
