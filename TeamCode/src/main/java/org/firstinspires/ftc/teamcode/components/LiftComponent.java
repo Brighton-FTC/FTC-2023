@@ -60,7 +60,7 @@ public class LiftComponent {
                 MAX_TICKS_PER_SECOND,
                 new PIDController(0, 0, 0),
                 new SimpleMotorFeedforward(120, 0.6, 0),
-                (counts) -> 170
+                (counts) -> 170 // Speed which makes robot 'just' start to move - static friction
         );
         trapezoidalProfileMotor = new TrapezoidalProfileMotor(motorVelocityController, new TrapezoidalProfile(MAX_TICKS_PER_SECOND, 3000));
         // Reset the encoder counts to start from the initial position
